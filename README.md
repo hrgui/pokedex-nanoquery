@@ -17,9 +17,9 @@ This is really simple and elegant and not necessarily bound to a framework. nano
 
 I can subscribe to changes like the following:
 
-```
-$currentPokemonId.subscribe(x => console.log(x))
-$currentPokemonId.set(25)
+```js
+$currentPokemonId.subscribe((x) => console.log(x));
+$currentPokemonId.set(25);
 
 // 25 will be printed out
 ```
