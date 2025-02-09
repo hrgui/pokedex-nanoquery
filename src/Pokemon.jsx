@@ -18,7 +18,7 @@ export const Pokemon = ({ id }) => {
         <PokemonHeader id={data.id} name={data.name} />
         <div className="flex flex-wrap h-[80vh] overflow-auto items-center justify-center">
           {data.allImages.map((src) => (
-            <img className="w-[100px] shrink-0" key={src} src={src} />
+            <img className="h-[100px] object-cover shrink-0" key={src} src={src} />
           ))}
         </div>
         <PokemonHeader id={data.id} name={data.name} />
