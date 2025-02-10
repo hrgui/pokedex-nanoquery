@@ -2,6 +2,9 @@ import "./App.css";
 import { useStore } from "@nanostores/react";
 import { Pokemon } from "./Pokemon";
 import { $currentPokemonId } from "./stores/pokemon";
+import { createHashRouter, RouterProvider } from "react-router";
+import { onMount } from "nanostores";
+import { Navigate } from "react-router";
 
 const MAX_POKEMON_ID = 1025;
 
@@ -60,8 +63,9 @@ const Nav = () => {
   );
 };
 
-function App() {
+function PokemonPage() {
   const pokemonId = useStore($currentPokemonId);
+
   return (
     <div className="mx-auto w-[400px]">
       <Nav />
@@ -69,6 +73,30 @@ function App() {
       <Nav />
     </div>
   );
+}
+
+const router = createHashRouter([
+  {
+    path: "/",
+    element: <Navigate to={`/${$currentPokemonId.get()}`} replace />,
+  },
+  {
+    path: "/:id",
+    element: <PokemonPage />,
+    loader: ({ params }) => {
+      $currentPokemonId.set(+params.id);
+    },
+  },
+]);
+
+onMount($currentPokemonId, () => {
+  $currentPokemonId.subscribe((id) => {
+    history.pushState(null, "", `/#/${id}`);
+  });
+});
+
+function App() {
+  return <RouterProvider router={router} />;
 }
 
 export default App;
