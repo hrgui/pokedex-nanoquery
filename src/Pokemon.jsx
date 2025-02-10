@@ -3,8 +3,9 @@ import { $currentPokemon } from "./stores/pokemon";
 
 const PokemonHeader = ({ id, name }) => {
   return (
-    <h2 className="text-2xl text-center flex gap-2 items-center justify-center">
-      #{id} {name}
+    <h2 className="text-2xl text-center flex items-center justify-center">
+      <div className="mr-2">#{id}</div>
+      {name}
     </h2>
   );
 };
