@@ -7,6 +7,7 @@ import { onMount } from "nanostores";
 import { Navigate } from "react-router";
 
 const MAX_POKEMON_ID = 1025;
+const rootPathName = location.pathname;
 
 const Nav = () => {
   const pokemonId = useStore($currentPokemonId);
@@ -91,7 +92,8 @@ const router = createHashRouter([
 
 onMount($currentPokemonId, () => {
   $currentPokemonId.subscribe((id) => {
-    history.pushState(null, "", `/#/${id}`);
+    console.log(rootPathName);
+    history.pushState(null, "", `${rootPathName}#/${id}`);
   });
 });
 
