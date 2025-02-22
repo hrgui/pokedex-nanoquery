@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useStore } from "@nanostores/react";
 import { $currentPokemon } from "./stores/pokemon";
 
