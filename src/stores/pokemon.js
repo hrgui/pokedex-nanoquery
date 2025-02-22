@@ -2,7 +2,9 @@ import { atom } from "nanostores";
 
 import { nanoquery } from "@nanostores/query";
 
-class Pokemon {
+const MAX_POKEMON_ID = 1025;
+
+export class Pokemon {
   constructor(data) {
     this.data = data;
   }
@@ -43,6 +45,22 @@ class Pokemon {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
     return new Pokemon(await res.json());
   }
+
+  static validate = (id) => {
+    if (isNaN(id)) {
+      return false;
+    }
+
+    if (id < 1) {
+      return false;
+    }
+
+    if (id > MAX_POKEMON_ID) {
+      return false;
+    }
+
+    return true;
+  };
 }
 
 export const [createFetcherStore, createMutatorStore] = nanoquery({

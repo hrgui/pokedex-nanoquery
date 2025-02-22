@@ -1,43 +1,27 @@
 import "./App.css";
 import { useStore } from "@nanostores/react";
 import { Pokemon } from "./Pokemon";
+import { Pokemon as PokemonSingleton } from "./stores/pokemon";
 import { $currentPokemonId } from "./stores/pokemon";
 import { createHashRouter, RouterProvider } from "react-router";
 import { onMount } from "nanostores";
 import { Navigate } from "react-router";
 
-const MAX_POKEMON_ID = 1025;
 const rootPathName = location.pathname;
 
 const Nav = () => {
   const pokemonId = useStore($currentPokemonId);
 
-  const validate = (id) => {
-    if (isNaN(id)) {
-      return false;
-    }
-
-    if (id < 1) {
-      return false;
-    }
-
-    if (id > MAX_POKEMON_ID) {
-      return false;
-    }
-
-    return true;
-  };
-
   const inc = () => {
-    validate(pokemonId + 1) && $currentPokemonId.set(pokemonId + 1);
+    PokemonSingleton.validate(pokemonId + 1) && $currentPokemonId.set(pokemonId + 1);
   };
 
   const dec = () => {
-    validate(pokemonId - 1) && $currentPokemonId.set(pokemonId - 1);
+    PokemonSingleton.validate(pokemonId - 1) && $currentPokemonId.set(pokemonId - 1);
   };
 
   const handleInputChange = (e) => {
-    validate(+e.target.value) && $currentPokemonId.set(+e.target.value);
+    PokemonSingleton.validate(+e.target.value) && $currentPokemonId.set(+e.target.value);
   };
 
   return (
@@ -92,7 +76,6 @@ const router = createHashRouter([
 
 onMount($currentPokemonId, () => {
   $currentPokemonId.subscribe((id) => {
-    console.log(rootPathName);
     history.pushState(null, "", `${rootPathName}#/${id}`);
   });
 });
